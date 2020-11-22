@@ -4,12 +4,17 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QDialog
 from PyQt5.QtGui import QPainter, QColor, QPen, qRgb, QPainterPath, QBrush
 from PyQt5.QtCore import Qt, QPoint
 from random import randint, choice
+from ui_file import Ui_Form
+
+def get_random_color():
+    r, g, b = randint(0, 255), randint(0, 255), randint(0, 255)
+    return QColor(qRgb(r, g, b))
 
 
-class MyWidget(QWidget):
+class MyWidget(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('Ui.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.run)
         self.started = False
         
@@ -22,8 +27,10 @@ class MyWidget(QWidget):
             return
         qp = QPainter()
         qp.begin(self)
+        # color = randint(0, 255), randint(0, 255), randint(0, 255)
+        qp.setBrush(get_random_color())
         center = QPoint(randint(0, 400), randint(0, 400))
-        qp.setBrush(Qt.yellow)
+        # qp.setBrush(Qt.yellow)
         r = randint(1, 200)
         qp.drawEllipse(center, r, r)
         qp.end()
